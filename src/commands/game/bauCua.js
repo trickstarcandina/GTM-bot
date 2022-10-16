@@ -52,6 +52,7 @@ class UserCommand extends WynnCommand {
 	}
 
 	async execute(interaction) {
+		await interaction.reply('waiting ...');
 		return await this.randomBauCua(interaction);
 	}
 }

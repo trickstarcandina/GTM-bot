@@ -59,7 +59,8 @@ class UserCommand extends WynnCommand {
 	}
 
 	async execute(interaction) {
-		return await interaction.reply('none');
+		await interaction.reply('waiting ...');
+		return await this.randomTaiXiu(interaction);
 	}
 }
 
