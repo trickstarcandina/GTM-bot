@@ -20,10 +20,10 @@ class UserCommand extends WynnCommand {
 			...options,
 			name: 'taixiu',
 			aliases: ['tx', 'taixiu'],
-			description: 'commands/taixiu:description',
-			usage: 'commands/taixiu:usage',
-			example: 'commands/taixiu:example',
-			cooldownDelay: 25000
+			description: 'tài xỉu',
+			usage: '-taixiu',
+			example: '-tx',
+			cooldownDelay: 15000
 		});
 	}
 

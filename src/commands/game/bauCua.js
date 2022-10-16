@@ -20,10 +20,10 @@ class UserCommand extends WynnCommand {
 			...options,
 			name: 'baucua',
 			aliases: ['bc', 'baucua'],
-			description: 'commands/baucua:description',
-			usage: 'commands/baucua:usage',
-			example: 'commands/baucua:example',
-			cooldownDelay: 25000
+			description: 'Bầu cua',
+			usage: '-baucua',
+			example: '-bc',
+			cooldownDelay: 15000
 		});
 	}
 
