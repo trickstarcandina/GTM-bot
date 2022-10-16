@@ -6,9 +6,6 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const fs = require('node:fs');
 
-//get ip
-var http = require('http');
-
 const commands = [];
 for (const folder of fs.readdirSync('./src/commands')) {
 	if (folder.toString() === 'ownerBot') continue;
@@ -50,12 +47,6 @@ const client = new WynnClient({
 
 const main = async () => {
 	try {
-		//get ip
-		http.get({ host: 'api.ipify.org', port: 80, path: '/' }, function (resp) {
-			resp.on('data', function (ip) {
-				console.log('My public IP address is: ' + ip);
-			});
-		});
 		client.logger.info('Logging in');
 		await client.login(process.env.TOKEN);
 		client.logger.info('logged in');

@@ -1,5 +1,4 @@
 const { SapphireClient } = require('@sapphire/framework');
-const Discord = require('discord.js');
 
 class WynnClient extends SapphireClient {
 	constructor(options) {
@@ -19,16 +18,10 @@ class WynnClient extends SapphireClient {
 					}
 				},
 				fetchLanguage: async ({ guild }) => {
-					if (guild) {
-						const guildConfig = await this.db.fetchGuild(guild.id);
-						return guildConfig.language;
-					}
-
-					return 'en-US';
+					return 'vi-VN';
 				}
-			},
+			}
 		});
-		this.fetchPrefix = fetchPrefix.bind(this);
 	}
 }
 module.exports = WynnClient;

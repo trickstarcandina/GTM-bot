@@ -13,8 +13,7 @@ class UserCommand extends WynnCommand {
 			aliases: ['help', 'h', 'common'],
 			description: 'commands/help:description',
 			usage: 'commands/help:usage',
-			example: 'commands/help:example',
-			preconditions: [['RestrictUser']]
+			example: 'commands/help:example'
 		});
 	}
 	async messageRun(message, args) {

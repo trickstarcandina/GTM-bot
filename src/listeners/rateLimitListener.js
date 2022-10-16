@@ -1,5 +1,4 @@
 const { Listener } = require('@sapphire/framework');
-const { logger } = require('../utils/index');
 require('dotenv').config({ path: './src/.env' });
 
 class RateLimitListener extends Listener {
@@ -19,7 +18,6 @@ class RateLimitListener extends Listener {
 				console.log('err');
 			}
 		});
-		logger.warn(`Timeout : ${timeout}ms\nLimit : ${limit} requests`);
 		this.container.client.logger.info(`Timeout : ${timeout}ms\nLimit : ${limit} requests`);
 	}
 }

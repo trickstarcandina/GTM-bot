@@ -1,14 +1,9 @@
 const WynnCommand = require('../../lib/Structures/WynnCommand');
 const { send } = require('@sapphire/plugin-editable-commands');
-const { fetchT } = require('@sapphire/plugin-i18next');
-const logger = require('../../utils/logger');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const utils = require('../../lib/utils');
 const wait = require('node:timers/promises').setTimeout;
 
-const game = require('../../config/game');
 const emoji = require('../../config/emoji');
-const moneyEmoji = emoji.common.money;
 const dices = {
 	one: emoji.game.taixiu.one,
 	two: emoji.game.taixiu.two,
@@ -28,24 +23,15 @@ class UserCommand extends WynnCommand {
 			description: 'commands/taixiu:description',
 			usage: 'commands/taixiu:usage',
 			example: 'commands/taixiu:example',
-			cooldownDelay: 25000,
-			preconditions: [['RestrictUser']]
+			cooldownDelay: 25000
 		});
 	}
 
 	async messageRun(message, args) {
-		const t = await fetchT(message);
-		// let input = await args.next();
-		// let userInfo = await this.container.client.db.fetchUser(message.author.id);
-		// let betMoney = input === 'all' ? (maxBet <= userInfo.money ? maxBet : userInfo.money) : Number(input);
-		//syntax check
-		// if (isNaN(betMoney) || input === null) {
-		return await this.randomTaiXiu(message, t);
-		// }
-		// return this.mainProcess(betMoney, message, t, userInfo, message.author.id, message.author.tag);
+		return await this.randomTaiXiu(message);
 	}
 
-	async randomTaiXiu(message, t) {
+	async randomTaiXiu(message) {
 		let randDices = [];
 		while (randDices.length < 3) {
 			randDices.push(Math.floor(Math.random() * 6));
@@ -62,60 +48,18 @@ class UserCommand extends WynnCommand {
 		let total = randDices[0] + randDices[1] + randDices[2] + 3;
 		switch (true) {
 			case total < 11 && total % 2 === 0:
-				return await Promise.all([
-					lastResult.edit(result1 + ' ' + result2 + ' ' + result3),
-					send(
-						message,
-						t('commands/taixiu:xiuchan', {
-							amount: total
-						})
-					)
-				]);
+				return await Promise.all([lastResult.edit(result1 + ' ' + result2 + ' ' + result3), send(message, `** Xỉu • Chẵn • ${total}**`)]);
 			case total < 11 && total % 2 === 1:
-				return await Promise.all([
-					lastResult.edit(result1 + ' ' + result2 + ' ' + result3),
-					send(
-						message,
-						t('commands/taixiu:xiule', {
-							amount: total
-						})
-					)
-				]);
+				return await Promise.all([lastResult.edit(result1 + ' ' + result2 + ' ' + result3), send(message, `** Xỉu • Lẻ • ${total}**`)]);
 			case total > 10 && total % 2 === 0:
-				return await Promise.all([
-					lastResult.edit(result1 + ' ' + result2 + ' ' + result3),
-					send(
-						message,
-						t('commands/taixiu:taichan', {
-							amount: total
-						})
-					)
-				]);
+				return await Promise.all([lastResult.edit(result1 + ' ' + result2 + ' ' + result3), send(message, `** Tài • Chẵn • ${total}**`)]);
 			case total > 10 && total % 2 === 1:
-				return await Promise.all([
-					lastResult.edit(result1 + ' ' + result2 + ' ' + result3),
-					send(
-						message,
-						t('commands/taixiu:taile', {
-							amount: total
-						})
-					)
-				]);
+				return await Promise.all([lastResult.edit(result1 + ' ' + result2 + ' ' + result3), send(message, `** Tài • Lẻ • ${total}**`)]);
 		}
 	}
 
 	async execute(interaction) {
-		const t = await fetchT(interaction);
-		let userInfo = await this.container.client.db.fetchUser(interaction.user.id);
 		return await interaction.reply('none');
-		// return await this.mainProcess(
-		// 	Number(interaction.options.getInteger('betmoney')),
-		// 	interaction,
-		// 	t,
-		// 	userInfo,
-		// 	interaction.user.id,
-		// 	interaction.user.tag
-		// );
 	}
 }
 
